@@ -1,0 +1,38 @@
+plugins {
+    id 'com.jfrog.bintray' version '1.0'
+}
+
+apply plugin: 'groovy'
+
+
+group = 'com.github.rtyler'
+version = '0.1.0'
+description = ''
+
+dependencies {
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'cglib:cglib-nodep:2.2.+'
+}
+
+
+bintray {
+    user = project.bintrayUser
+    key = project.bintrayKey
+    publish = true
+    dryRun = false
+    configurations = ['archives']
+
+    pkg {
+        userOrg = 'rtyler'
+        repo = 'maven'
+        name = 'localdocs-gradle-plugin'
+        labels = []
+
+        version {
+            name = project.version
+            vcsTag = "v${project.version}"
+            desc = project.description
+        }
+    }
+}
+bintrayUpload.dependsOn assemble
